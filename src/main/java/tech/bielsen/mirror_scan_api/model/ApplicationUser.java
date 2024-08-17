@@ -20,7 +20,7 @@ public class ApplicationUser {
     private String password;
     @Indexed(unique = true)
     private String email;
+    private String displayName;
     private List<String> favoritesScan;
     private LocalDateTime created;
-    private String role;
 }

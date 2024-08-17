@@ -5,9 +5,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import tech.bielsen.mirror_scan_api.model.ApplicationUser;
-import tech.bielsen.mirror_scan_api.model.Role;
-import tech.bielsen.mirror_scan_api.repository.RoleRepository;
 import tech.bielsen.mirror_scan_api.repository.UserRepository;
+
+import java.time.LocalDateTime;
 
 @SpringBootApplication
 public class Application {
@@ -17,20 +17,21 @@ public class Application {
 	}
 
 	@Bean
-	CommandLineRunner run(RoleRepository roleRepo, UserRepository userRepo) {
+	CommandLineRunner run(UserRepository userRepo) {
 		return args -> {
-			if (roleRepo.findByAuthority("ROLE_USER") == null) {
-				Role r = new Role();
-				r.setAuthority("ROLE_USER");
-				roleRepo.save(r);
+
+			if (userRepo.findByUsername("test").isEmpty()) {
+				ApplicationUser user = new ApplicationUser();
+				user.setUsername("test");
+				user.setPassword("test");
+				user.setEmail("test@gmail.com");
+				user.setDisplayName("Test User");
+				user.setCreated(LocalDateTime.now());
+				userRepo.save(user);
 			}
-
-			ApplicationUser u = new ApplicationUser();
-			u.setUsername("test");
-			u.setPassword("test");
-			u.setEmail("teste@gmail.com");
-
-			userRepo.save(u);
+			else {
+				System.out.println("User already exists");
+			}
 		};
 	}
 }

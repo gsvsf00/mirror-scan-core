@@ -1,24 +1,21 @@
 package tech.bielsen.mirror_scan_api.controller;
 
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import tech.bielsen.mirror_scan_api.model.ApplicationUser;
 import tech.bielsen.mirror_scan_api.services.UserService;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/api/v1/user")
+@RequestMapping("/auth")
 @AllArgsConstructor
-public class UserController {
+public class AuthenticationController {
     private final UserService userService;
 
-    @GetMapping
-    public List<ApplicationUser> getAllUsers() {
-        return userService.getAllUsers();
+    @PostMapping("/register")
+    public ApplicationUser register(@RequestBody ApplicationUser user) {
+        return userService.createUser(user);
     }
-
-
 }
