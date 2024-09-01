@@ -6,22 +6,21 @@ import org.springframework.web.bind.annotation.*;
 import tech.bielsen.mirror_scan_api.model.ApplicationUser;
 import tech.bielsen.mirror_scan_api.services.UserService;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/auth")
 @AllArgsConstructor
-public class UserController {
+public class AuthenticationController {
 
     private final UserService userService;
 
-    @GetMapping("/users")
-    public List<ApplicationUser> getAllUsers() {
-        return userService.getAllUsers();
+    @PostMapping("/register")
+    public ResponseEntity<String> register(@RequestBody ApplicationUser user) {
+        userService.createUser(user);
+        return ResponseEntity.ok("User created");
     }
 
-    @GetMapping("/user/{identifier}")
-    public ApplicationUser getUserByEmailOrUsername(@PathVariable String identifier) {
-        return userService.getUserByEmailOrUsername(identifier);
+    @GetMapping("/test")
+    public ResponseEntity<String> test() {
+        return ResponseEntity.ok("Test successful");
     }
 }
