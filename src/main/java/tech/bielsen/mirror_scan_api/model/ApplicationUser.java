@@ -16,11 +16,11 @@ public class ApplicationUser {
     private String id;
     @Indexed(unique = true)
     private String username;
-    @JsonIgnore
     private String password;
     @Indexed(unique = true)
     private String email;
     private String displayName;
+    @JsonIgnore
     private List<String> favoritesScan;
     private LocalDateTime created;
 }

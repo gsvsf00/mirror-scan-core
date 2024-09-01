@@ -16,6 +16,7 @@ public class Application {
 		SpringApplication.run(Application.class, args);
 	}
 
+
 	@Bean
 	CommandLineRunner run(UserRepository userRepo) {
 		return args -> {
