@@ -18,16 +18,18 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/api/**", "/auth/register").permitAll()
+                        .requestMatchers("/", "/scan", "/api/**", "/auth/register").permitAll()
+                        .anyRequest().authenticated()  // Other requests require authentication
                 )
-                .formLogin(withDefaults())
-                .oauth2Login(withDefaults())
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .formLogin(withDefaults())  // This may still trigger for non-permitted paths
+                .oauth2Login(withDefaults()) // OAuth2 login
                 .build();
     }
 
