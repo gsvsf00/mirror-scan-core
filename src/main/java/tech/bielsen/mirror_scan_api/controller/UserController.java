@@ -12,7 +12,7 @@ import tech.bielsen.mirror_scan_api.integration.model.ScrapedItem;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/user")
 @AllArgsConstructor
 public class UserController {
 
