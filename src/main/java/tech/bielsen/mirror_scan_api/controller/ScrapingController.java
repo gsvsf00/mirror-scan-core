@@ -5,11 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tech.bielsen.mirror_scan_api.integration.core.Crawller;
-import tech.bielsen.mirror_scan_api.model.ApplicationUser;
+import tech.bielsen.mirror_scan_api.integration.core.Crawler;
+import tech.bielsen.mirror_scan_api.integration.core.CrawlerPage;
+import tech.bielsen.mirror_scan_api.integration.model.ChapterData;
+import tech.bielsen.mirror_scan_api.integration.model.EnumSite;
 import tech.bielsen.mirror_scan_api.model.ScanMirror;
 import tech.bielsen.mirror_scan_api.services.ScanService;
-import tech.bielsen.mirror_scan_api.services.UserService;
 import tech.bielsen.mirror_scan_api.integration.model.ScrapedItem;
 
 import java.util.List;
@@ -54,12 +55,33 @@ public class ScrapingController {
 
     @GetMapping("/scan")
     public ResponseEntity<List<ScrapedItem>> scanMockUrl() {
-        Crawller c = new Crawller();
+        Crawler c = new Crawler();
         List<ScrapedItem> scrapedItems = c.scrapeAsura("https://manhuaplus.com/?s=martial+peak&post_type=wp-manga");
 
         // Return the list of scraped items with an OK status
         if (scrapedItems != null) {
             return ResponseEntity.ok(scrapedItems);
+        } else {
+            // Return a not found status if scraping failed
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    @PostMapping("/scan/page/{url}")
+    public ResponseEntity<List<ChapterData>> scanUrl(@PathVariable String url) {
+        CrawlerPage c = new CrawlerPage();
+
+        // You can dynamically choose which site to scrape based on some condition or default to ASURA
+        EnumSite base = EnumSite.ASURA;
+
+        String baseUrl = base.getBaseUrl();
+
+        // Call the scraper, combining the base URL with the passed URL
+        List<ChapterData> chapterData = c.scrapePage(base, baseUrl + url);
+
+        // Return the list of scraped items with an OK status
+        if (chapterData != null && !chapterData.isEmpty()) {
+            return ResponseEntity.ok(chapterData);
         } else {
             // Return a not found status if scraping failed
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
