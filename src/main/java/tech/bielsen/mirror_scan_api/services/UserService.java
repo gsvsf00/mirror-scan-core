@@ -30,8 +30,14 @@ public class UserService {
     }
 
     public ApplicationUser updateUser(ApplicationUser user) {
-        return userRepo.save(user);
+        try {
+            return userRepo.save(user);
+        }
+        catch (Exception e) {
+            throw new EmailOrUserAlreadyTakenException();
+        }
     }
+
 
     public ApplicationUser registerUser(RegistrationObject ro) {
         ApplicationUser user = new ApplicationUser();

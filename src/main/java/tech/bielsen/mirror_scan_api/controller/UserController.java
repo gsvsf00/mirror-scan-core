@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tech.bielsen.mirror_scan_api.integration.core.Crawller;
+import tech.bielsen.mirror_scan_api.integration.core.Crawler;
 import tech.bielsen.mirror_scan_api.model.ApplicationUser;
 import tech.bielsen.mirror_scan_api.services.UserService;
 import tech.bielsen.mirror_scan_api.integration.model.ScrapedItem;
@@ -30,7 +30,7 @@ public class UserController {
 
     @GetMapping("/scan")
     public ResponseEntity<List<ScrapedItem>> scanMockUrl() {
-        Crawller c = new Crawller();
+        Crawler c = new Crawler();
         List<ScrapedItem> scrapedItems = c.scrapeAsura("https://manhuaplus.com/?s=martial+peak&post_type=wp-manga");
 
         // Return the list of scraped items with an OK status
