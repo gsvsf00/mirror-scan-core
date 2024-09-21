@@ -36,5 +36,15 @@ public class ApplicationUser {
     @JsonIgnore
     private List<String> favoritesScan;
 
+    @JsonIgnore
+    private boolean enabled;
+
+    @JsonIgnore
+    private Long verificationCode;
+
     private LocalDateTime created;
+
+    public ApplicationUser() {
+        this.enabled = false;
+    }
 }

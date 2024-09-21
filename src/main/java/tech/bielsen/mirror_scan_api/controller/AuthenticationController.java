@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.bielsen.mirror_scan_api.exceptions.EmailOrUserAlreadyTakenException;
+import tech.bielsen.mirror_scan_api.exceptions.EmailOrUserDoNotExistException;
 import tech.bielsen.mirror_scan_api.model.ApplicationUser;
 import tech.bielsen.mirror_scan_api.model.RegistrationObject;
 import tech.bielsen.mirror_scan_api.services.UserService;
@@ -32,9 +33,9 @@ public class AuthenticationController {
         return userService.registerUser(ro);
     }
 
-    @GetMapping("/test")
-    public ResponseEntity<String> test() {
-        return ResponseEntity.ok("Test successful");
+    @ExceptionHandler({EmailOrUserDoNotExistException.class})
+    public ResponseEntity<String> handleEmailOrUserDoNotExist() {
+        return new ResponseEntity<String>("Email or username do not exist", HttpStatus.CONFLICT);
     }
 
     @PutMapping("/update/email")
