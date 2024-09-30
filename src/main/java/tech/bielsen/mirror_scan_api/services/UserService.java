@@ -1,12 +1,14 @@
 package tech.bielsen.mirror_scan_api.services;
 
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import tech.bielsen.mirror_scan_api.exceptions.EmailOrUserAlreadyTakenException;
 import tech.bielsen.mirror_scan_api.exceptions.EmailOrUserDoNotExistException;
 import tech.bielsen.mirror_scan_api.model.ApplicationUser;
 import tech.bielsen.mirror_scan_api.model.ERole;
 import tech.bielsen.mirror_scan_api.model.Role;
+import tech.bielsen.mirror_scan_api.model.dto.AuthenticationDTO;
 import tech.bielsen.mirror_scan_api.repository.RoleRepository;
 import tech.bielsen.mirror_scan_api.repository.UserRepository;
 import tech.bielsen.mirror_scan_api.model.RegistrationObject;
@@ -45,10 +47,12 @@ public class UserService {
         if (userRepo.existsByUsername(ro.getUsername()) || userRepo.existsByEmail(ro.getEmail())) {
             throw new EmailOrUserAlreadyTakenException();
         }
+        
+        String encrypted = new BCryptPasswordEncoder().encode(ro.getPassword());
 
         user.setUsername(ro.getUsername());
         user.setEmail(ro.getEmail());
-        user.setPassword(ro.getPassword());
+        user.setPassword(encrypted);
         user.setCreated(LocalDateTime.now());
 
         Set<Role> roles = user.getRoles();
@@ -62,7 +66,7 @@ public class UserService {
         userRepo.save(user);
         return user;
     }
-
+    
     public List<ApplicationUser> getAllUsers() {
         return userRepo.findAll();
     }
