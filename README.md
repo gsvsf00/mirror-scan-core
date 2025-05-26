@@ -94,7 +94,7 @@ mirror-scan-core/
 
 ## 🔍 API Documentation
 
-API documentation will be available at `/swagger-ui.html` when the application is running (if Swagger is configured).
+API documentation will be available at `/swagger-ui.html` when the application is running.
 
 ## 📝 License
 
