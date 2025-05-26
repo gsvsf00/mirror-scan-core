@@ -51,7 +51,7 @@ The Mirror Scan API is designed to:
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/mirror-scan-core.git
+git clone https://github.com/gsvsf00/mirror-scan-core.git
 cd mirror-scan-core
 ```
 
