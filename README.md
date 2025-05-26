@@ -1,6 +1,24 @@
 # Mirror Scan API
 
-A Spring Boot-based API service that handles background operations for data retrieval and database modifications.
+A Spring Boot-based API service that handles background operations for data retrieval and database modifications. This API serves as a core component for scanning and monitoring web content, providing real-time data synchronization and analysis capabilities.
+
+## 📝 Overview
+
+The Mirror Scan API is designed to:
+- Monitor and scan web content for changes and updates
+- Store and manage data in both relational (JPA) and NoSQL (MongoDB) databases
+- Provide secure access through OAuth2 authentication
+- Enable web scraping and data extraction using JSoup
+- Offer real-time monitoring through Spring Actuator endpoints
+- Support background processing for data synchronization
+
+## 🎯 Use Cases
+
+- Web content monitoring and change detection
+- Data synchronization between different systems
+- Automated data collection and processing
+- Real-time content updates and notifications
+- Secure API access with OAuth2 authentication
 
 ## 🚀 Features
 
